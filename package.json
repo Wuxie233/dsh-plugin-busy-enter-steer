@@ -1,0 +1,17 @@
+{
+  "name": "dsh-plugin-busy-enter-steer",
+  "description": "Seed ui-conversation.busyEnter to steer when the user has not set it, so running-state Enter interrupts by default",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json"
+  },
+  "files": ["lib"],
+  "license": "MIT",
+  "peerDependencies": {
+    "@deepseek-ai/dsh-settings": "^0.1.0-rc.6",
+    "@deepseek-ai/schemastery": "^3.18.1"
+  }
+}
