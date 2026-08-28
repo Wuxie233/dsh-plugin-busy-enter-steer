@@ -17,7 +17,9 @@ DSH host-only 守护插件：用户未覆盖 `ui-conversation.busyEnter` 时写�
 ## Gotchas & Decisions
 
 - **不要改 DSH 源码默认值**：升级会冲掉；本插件只写用户文档。
+- **对照 DSH 0.1.2-alpha.1 (`5858da2d27`)**：host 半 `ui-conversation` 仍 `settings.register(settingsNamespace('ui-conversation'), ConversationSettingsSchema)`；字段 `busyEnter`，产品默认 `queue`（`z.union(['queue','steer']).default('queue')`）。`describe()` 仍给 `ns` / `user` / `revision`；写入仍是 `mutate(ns, [{ op: 'set', path: ['busyEnter'], value: 'steer' }], revision)`，冲突抛 `SettingsConflictError`；`settings/document-updated (ns, revision)` 在原始用户分节变化时触发。用户覆盖以 `user` 分节是否有该键为准，不要比较解析后的默认值。
 - **不要在用户已选 Queue 后再写回 Steer**：监听 `settings/document-updated` 时必须先看用户分节是否已有该键。
+- **`@deepseek-ai/dsh-settings` peer 钉 `^0.1.2-alpha.1`**：默认 semver 下 `^0.1.0-rc.6` 不包含 `0.1.2-alpha.1`。
 - **不要用 symlink 部署**：Node ESM 会解析到仓库路径，然后找不到 `@deepseek-ai/dsh-settings`。
 - **包名两处一致**：`package.json` `name` 与 `cordis.patch.yml` 挂载行 `name`。
 - **Config 必须是 schemastery schema**，不能是普通函数。
